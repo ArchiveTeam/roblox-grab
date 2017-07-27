@@ -178,7 +178,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     downloaded[string.gsub(url["url"], "https?://", "http://")] = true
   end
 
-  if string.match(url, "request%-error") and string.match(url, "code=500") then
+  if string.match(url["url"], "request%-error") and string.match(url["url"], "code=500") then
     return wget.actions.ABORT
   end
 
