@@ -178,6 +178,10 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     downloaded[string.gsub(url["url"], "https?://", "http://")] = true
   end
 
+  if string.match(url, "request%-error") and string.match(url, "code=500") then
+    return wget.actions.ABORT
+  end
+
   if abortgrab == true then
     io.stdout:write("ABORTING...\n")
     return wget.actions.ABORT
