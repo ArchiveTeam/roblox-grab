@@ -58,7 +58,7 @@ if not WGET_LUA:
 #
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
-VERSION = "20170727.05"
+VERSION = "20171207.01"
 USER_AGENT = 'ArchiveTeam'
 TRACKER_ID = 'roblox'
 TRACKER_HOST = 'tracker.archiveteam.org'
@@ -199,6 +199,12 @@ class WgetArgs(object):
             if int(id2) == 1:
                 wget_args.append('https://forum.roblox.com/Forum/ShowForum.aspx?ForumID={id1}'.format(id1=id1))
             wget_args.append('https://forum.roblox.com/Forum/ShowForum.aspx?ForumID={id1}&PageIndex={id2}'.format(id1=id1, id2=id2))
+        elif item_type == 'posts':
+            start, stop = item_value.split('-')
+            wget_args.extend(['--warc-header', 'roblox-post-range: {}'.format(item_value)])
+            for i in range(int(start), int(stop)+1):
+                wget_args.extend(['--warc-header', 'roblox-post: {}'.format(i)])
+                wget_args.append('https://forum.roblox.com/Forum/ShowPost.aspx?PostID={}'.format(i))
         else:
             raise Exception('Unknown item')
 

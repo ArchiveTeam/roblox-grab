@@ -136,7 +136,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       if string.match(html, '<span%s+class="normalTextSmallBold">Page%s+[0-9]+%s+of%s+[0-9,]+</span>') then
         local max_page = tonumber(string.gsub(string.match(html, '<span%s+class="normalTextSmallBold">Page%s+[0-9]+%s+of%s+([0-9,]+)</span>'), ",", "") .. "")
         if max_page > 1 then
-          for i=2, max_page do
+          for i=1, max_page do
             check(url .. "&PageIndex=" .. i)
           end
         end
